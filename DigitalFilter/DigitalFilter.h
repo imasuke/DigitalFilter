@@ -24,17 +24,40 @@ namespace DigitalFilter
 	protected:
 		std::vector<double> *impulse;
 		unsigned int order;
-		//カットオフ周波数(サンプリング周波数が1となるよう正規化)
-		double cutoff;
 	};
 
 	//ローパスフィルタ
 	//窓関数法によるFIRフィルタ
-	class DIGITAL_FILTER_API LowpassFilter : public Filter
-	{
+	class DIGITAL_FILTER_API LowpassFilter : public Filter{
 	public:
 		LowpassFilter(unsigned int order, double cutoff);
 	private:
 		double impulse_response(int n);
+	private:
+		//サンプリング周波数が1になるように正規化
+		double cutoff;
+	};
+
+	//ハイパスフィルタ
+	class DIGITAL_FILTER_API HighpassFilter : public Filter{
+	public:
+		HighpassFilter(unsigned int order, double cutoff);
+	private:
+		double impulse_response(int n);
+	private:
+		//サンプリング周波数が1になるように正規化
+		double cutoff;
+	};
+
+	//バンドパスフィルタ
+	class DIGITAL_FILTER_API BandpassFilter : public Filter{
+	public:
+		BandpassFilter(unsigned int order, double low_edge, double high_edge);
+	private:
+		double impulse_response(int n);
+	private:
+		//サンプリング周波数が1になるように正規化
+		double low_edge;
+		double high_edge;
 	};
 }
